@@ -14,14 +14,33 @@ const Forgotpassword = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    auth
-      .forgot(data)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    Swal.fire({
+      title: "change password?",
+      text: "Do you want to change your password?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, change it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        auth
+          .forgot(data)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((error) => {
+            console.log(error.response);
+            // setErr(error.response.data.message);
+          });
+
+        Swal.fire(
+          "Check email",
+          "check your email to change your passsword",
+          "success"
+        );
+      }
+    });
   };
   return (
     <div className="container-fluid login-wrapper">

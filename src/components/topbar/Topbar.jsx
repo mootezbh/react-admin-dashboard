@@ -1,5 +1,18 @@
+import { useNavigate } from "react-router-dom";
+import auth from "../../services/auth";
+
 /* eslint-disable no-undef */
 const Topbar = () => {
+  const navigate = useNavigate();
+  const refresh_token = JSON.parse(localStorage.getItem("refresh_token"));
+  const handlelogout = () => {
+    auth
+      .logout(refresh_token)
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
+    localStorage.clear();
+    navigate("/login");
+  };
   return (
     <div className="row header shadow-sm">
       {/*Logo*/}
@@ -57,7 +70,11 @@ const Topbar = () => {
                 className="dropdown-menu dropdown-menu-right mt-13"
                 aria-labelledby="dropdownMenuLink"
               >
-                <a className="dropdown-item" href="#">
+                <a
+                  className="dropdown-item"
+                  onClick={handlelogout}
+                  style={{ cursor: "pointer" }}
+                >
                   <i className="fa fa-power-off pr-2" /> Logout
                 </a>
               </div>

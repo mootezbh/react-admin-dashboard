@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import auth from "../../services/auth";
 
 const Login = () => {
   const [data, setData] = useState({});
+  const [err, setErr] = useState("");
   const navigate = useNavigate();
   const onChange = (e) => {
     setData({
@@ -35,14 +36,17 @@ const Login = () => {
         }
       })
       .catch((error) => {
+        setErr(error.response.data.message);
         console.log(error);
+        
       });
   };
   return (
+    <div className="login-body">
     <div className="container-fluid login-wrapper">
       <div className="login-box">
         <h1 className="text-center mb-5">
-          <i className="fa fa-rocket text-primary" /> Sleekadmin
+          <i className="fa fa-rocket text-primary" /> Ecom
         </h1>
         <div className="row">
           <div className="col-md-6 col-sm-6 col-12 login-box-info">
@@ -53,9 +57,11 @@ const Login = () => {
               cupidatat skateboard dolor brunch.
             </p>
             <p className="text-center">
-              <a href className="btn btn-light">
+              <Link to="/signup">
+              <a href className="btn btn-light" style={{ color: "black" }}>
                 Register here
               </a>
+              </Link>
             </p>
           </div>
           <div className="col-md-6 col-sm-6 col-12 login-box-form p-4">
@@ -96,6 +102,7 @@ const Login = () => {
                   onChange={onChange}
                 />
               </div>
+              <p style={{color : "red"}}>{err}</p><br />
               <div className="form-group">
                 <button className="btn btn-theme btn-block p-2 mb-1">
                   Login
@@ -112,6 +119,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

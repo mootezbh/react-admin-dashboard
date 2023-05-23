@@ -34,7 +34,7 @@ const Addproduct = () => {
   const handlefile = (e) => {
     setImage(e.target.files);
   };
-
+  const usr = JSON.parse(localStorage.getItem("user"));
   const handlSubmit = (e) => {
     e.preventDefault();
     const formdata = new FormData();
@@ -44,7 +44,7 @@ const Addproduct = () => {
     formdata.append("quantity", data.quantity);
     formdata.append("price", data.price);
     formdata.append("subcategory", data.subcategory);
-    formdata.append("provider", data.provider);
+    formdata.append("provider", usr._id);
     for (let index = 0; index < image?.length; index++) {
       formdata.append("gallery", image[index]);
     }
@@ -180,30 +180,6 @@ const Addproduct = () => {
           </div>
           <div className="form-group row">
             <label
-              htmlFor="exampleFormControlSelect1"
-              className="control-label col-sm-2"
-            >
-              Provider
-            </label>
-            <div className="col-sm-10">
-              <select
-                className="form-control"
-                id="exampleFormControlSelect1"
-                name="provider"
-                onChange={onChange}
-                value={data.provider}
-              >
-                <option selected>Select</option>
-                {provider?.map((item) => {
-                  return (
-                    <option value={item._id}>{item.name}</option>
-                  );
-                })}
-              </select>
-            </div>
-          </div>
-          <div className="form-group row">
-            <label
               className="control-label col-sm-2"
               htmlFor="exampleFormControlFile1"
             >
@@ -212,6 +188,7 @@ const Addproduct = () => {
             <div className="col-sm-10">
               <input
                 type="file"
+                multiple
                 className="form-control"
                 id="exampleFormControlFile1"
                 name="gallery"

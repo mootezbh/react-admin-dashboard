@@ -15,5 +15,8 @@ const getOne = (id) => {
 const deleteOne = (id) => {
   return http.delete(`/provider/delete/${id}`);
 };
+const accept = (data) => {
+  return http.post(`/provider/accept/`, data);
+};
 
-export default { create, update, getAll,getOne, deleteOne };
+export default { create, update, getAll,getOne, deleteOne, accept };

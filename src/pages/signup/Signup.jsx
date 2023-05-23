@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import provider from "../../services/provider";
 
 const Signup = () => {
     const navigate = useNavigate();
     const [data, setData] = useState({});
+    const [err, setErr] = useState("");
     const onChange = (e) => {
         setData({
             ...data,
@@ -18,6 +19,7 @@ const Signup = () => {
             navigate("/login");
         }).catch((error) => {
             console.log(error);
+            setErr(error.response.data.message);
         })
     }
   return (
@@ -36,9 +38,11 @@ const Signup = () => {
                 non cupidatat skateboard dolor brunch.
               </p>
               <p className="text-center">
+                <Link to="/login">
                 <a href className="btn btn-light" style={{ color: "black" }}>
                   Login here
                 </a>
+                </Link>
               </p>
             </div>
             <div className="col-md-6 col-sm-6 col-12 login-box-form p-4">
@@ -56,7 +60,7 @@ const Signup = () => {
                   <input
                     type="text"
                     className="form-control mt-0"
-                    placeholder="Username"
+                    placeholder="name"
                     aria-label="Username"
                     aria-describedby="basic-addon1"
                     name="name"
@@ -111,6 +115,7 @@ const Signup = () => {
                     onChange={onChange}
                   />
                 </div>
+                <p style={{color : "red"}}>{err}</p><br />
                 <div className="form-group">
                   <button className="btn btn-theme btn-block p-2 mb-1" type="submit">
                     Register
